@@ -1,3 +1,13 @@
+/*
+LIRI is a command line node app that 
+takes in parameters and gives back data.
+The commands are:
+movie-this
+spotify-this-song
+my-tweets
+do-what-it-says
+*/
+
 // Using the require keyword lets us access all of the exports
 // in our keys.js file
 var fs = require("./keys.js");
@@ -11,21 +21,21 @@ console.log("`  Your consumer key = " + fs.twitterKeys.consumer_key);
 console.log("Your consumer secret = " + fs.twitterKeys.consumer_secret);
 console.log("Your access key = " + fs.twitterKeys.access_token_key);
 console.log("Your access secret = " + fs.twitterKeys.access_token_secret);
-
+//take in the command from the command line at the terminal
 var inCommand = process.argv[2];
 
 if (inCommand === "my-tweets") {
     getTweets();
 } // close if
-    else if (inCommand === "spotify-this-song") {
-            getSpotify();
-    } // close else if
-            else if (inCommand === "movie-this") {
-                    getOMDB();
-            } // close else if
-                    else if (inCommand === "do-what-it-says") {
-                            doIt();
-                } //close else if
+else if (inCommand === "spotify-this-song") {
+    getSpotify();
+} // close else if
+else if (inCommand === "movie-this") {
+    getOMDB();
+} // close else if
+else if (inCommand === "do-what-it-says") {
+    doIt();
+} //close else if
 
 function doIt() {
     //var fs = require("../text/random.txt");   
@@ -149,4 +159,3 @@ function getTweets() {
         } // close if
     }); // close client.get function
 }; // close getTweets
-
