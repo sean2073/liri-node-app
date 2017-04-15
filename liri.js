@@ -99,7 +99,7 @@ function getOMDB() {
         }; //closes getOMDB
         */
 
-    omdb.get({ title: movieName, year: movieYear }, true, function(err, movie, body) {
+    omdb.get({ title: movieName, year: movieYear }, true, function(err, movie) {
         if (err) {
             return console.error(err);
         } // close if
