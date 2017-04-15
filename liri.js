@@ -40,7 +40,7 @@ else if (inCommand === "do-what-it-says") {
 function doIt() {
     //var fs = require("../text/random.txt");   
     var fs = require("fs");
-    fs.readFile("../text/random.txt", "utf8", function(error, data) {
+    fs.readFile("./random.txt", "utf8", function(error, data) {
         console.log(data);
 
         // Then split it by commas (to make it more readable)
