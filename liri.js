@@ -10,17 +10,25 @@ do-what-it-says
 
 // Using the require keyword lets us access all of the exports
 // in our keys.js file
-var fs = require("./keys.js");
+var keys = require("./keys.js");
 
-var consumerKey = fs.twitterKeys.consumer_key;
-var consumerSec = fs.twitterKeys.consumer_secret;
-var accessKey = fs.twitterKeys.access_token_key;
-var accessSec = fs.twitterKeys.access_token_secret;
+var omdb = require('omdb');
 
-console.log("`  Your consumer key = " + fs.twitterKeys.consumer_key);
-console.log("Your consumer secret = " + fs.twitterKeys.consumer_secret);
-console.log("Your access key = " + fs.twitterKeys.access_token_key);
-console.log("Your access secret = " + fs.twitterKeys.access_token_secret);
+var spotify = require('spotify');
+
+var Twitter = require('twitter');
+
+var fs = require("fs");
+
+var consumerKey = keys.twitterKeys.consumer_key;
+var consumerSec = keys.twitterKeys.consumer_secret;
+var accessKey = keys.twitterKeys.access_token_key;
+var accessSec = keys.twitterKeys.access_token_secret;
+
+console.log("Your consumer key = " + keys.twitterKeys.consumer_key);
+console.log("Your consumer secret = " + keys.twitterKeys.consumer_secret);
+console.log("Your access key = " + keys.twitterKeys.access_token_key);
+console.log("Your access secret = " + keys.twitterKeys.access_token_secret);
 //take in the command from the command line at the terminal
 var inCommand = process.argv[2];
 
@@ -39,7 +47,7 @@ else if (inCommand === "do-what-it-says") {
 
 function doIt() {
     //var fs = require("../text/random.txt");   
-    var fs = require("fs");
+    
     fs.readFile("./random.txt", "utf8", function(error, data) {
         console.log(data);
 
@@ -65,7 +73,7 @@ function doIt() {
 }; // close doIt()
 
 function getOMDB() {
-    var omdb = require('omdb');
+    
     var movieName = process.argv[3];
     var movieYear = process.argv[4];
     console.log("the movie chosen is " + movieName);
@@ -91,7 +99,7 @@ function getOMDB() {
         }; //closes getOMDB
         */
 
-    omdb.get({ title: movieName, year: movieYear }, true, function(err, movie) {
+    omdb.get({ title: movieName, year: movieYear }, true, function(err, movie, body) {
         if (err) {
             return console.error(err);
         } // close if
@@ -108,8 +116,19 @@ function getOMDB() {
     console.log('%s (%d) %d/10', movie.actors);
     console.log('%s (%d) %d/10', movie.countries);
     console.log(movie.plot);*/
-
-        console.log(movie);
+      
+        
+        console.log("Title: " + movie.title);
+        console.log("Year: " + movie.year);
+        console.log("Rated: " + movie.rated);
+        console.log("IMDB Rating: " + movie.imdb.rating);
+        console.log("Country: " + movie.countries);
+        console.log("Language: " + movie.language);
+        console.log("Plot: " + movie.plot);
+        console.log("Actors: " + movie.actors);
+        console.log("Rotten Tomatoes Rating: " + movie.tomatoRating);
+        console.log("Rotton Tomatoes URL: " + movie.tomatoURL);
+        //console.log(movie);
 
     }); //closes OMDB.get function
 }; //closes getOMDB()
@@ -119,7 +138,7 @@ function getSpotify() {
     if (song === '') {
         song = 'The Sign';
     } // close if
-    var spotify = require('spotify');
+    
 
     spotify.search({ type: 'track', query: song }, function(err, data) {
         if (err) {
@@ -142,7 +161,7 @@ function getSpotify() {
 
 }; //closes getSpotify();
 function getTweets() {
-    var Twitter = require('twitter');
+   
 
     var client = new Twitter({
         consumer_key: consumerKey,
@@ -154,8 +173,13 @@ function getTweets() {
     var params = { screen_name: 'sean2073', count: 20 };
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
-            console.log(tweets);
-            //console.log(response.text);
+            for (var i = 0; i < tweets.length; i++) 
+            {
+                console.log(tweets[i].created_at);
+                console.log(tweets[i].text);
+            }
+
+            
         } // close if
     }); // close client.get function
 }; // close getTweets
